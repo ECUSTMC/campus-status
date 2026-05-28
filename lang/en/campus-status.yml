@@ -58,4 +58,6 @@ config:
     revoke-confirm: "Are you sure you want to revoke the on-campus verification for user :name?"
     revoke-success: On-campus verification has been revoked
     revoke-fail: Failed to revoke verification
+    search-placeholder: Search UID / Nickname / Email
+    showing: "Showing :from - :to of :total"
   invalid-cidr: "The following CIDR entries are invalid and have been ignored: :list"

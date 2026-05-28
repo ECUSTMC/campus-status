@@ -53,7 +53,20 @@ class ConfigController extends Controller
         $form->addMessage(trans('CampusStatus::campus-status.config.stats.unverified', ['count' => $unverifiedCount]), 'info');
         $form->addMessage(trans('CampusStatus::campus-status.config.stats.total', ['count' => $totalUsers]), 'info');
 
-        $users = User::orderBy('uid', 'desc')->paginate(20);
+        $search = request()->query('search', '');
+
+        $query = User::orderBy('uid', 'desc');
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('uid', $search)
+                  ->orWhere('nickname', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $users = $query->paginate(20)->appends(['search' => $search]);
+
         $userStatuses = [];
 
         foreach ($users as $user) {
@@ -72,6 +85,7 @@ class ConfigController extends Controller
             'form' => $form,
             'users' => $users,
             'userStatuses' => $userStatuses,
+            'search' => $search,
         ]);
     }
 }

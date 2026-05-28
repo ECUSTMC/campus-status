@@ -58,4 +58,6 @@ config:
     revoke-confirm: "确定要撤销用户 :name 的在校认证吗？"
     revoke-success: 已撤销该用户的在校认证
     revoke-fail: 撤销认证失败
+    search-placeholder: 搜索 UID / 昵称 / 邮箱
+    showing: "显示 :from - :to，共 :total 条"
   invalid-cidr: "以下 CIDR 格式无效已被忽略：:list"

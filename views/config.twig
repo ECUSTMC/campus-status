@@ -15,6 +15,25 @@
       <div class="card-header">
         <h3 class="card-title">{{ trans('CampusStatus::campus-status.config.user-list.title') }}</h3>
       </div>
+      <div class="card-body">
+        <form method="get" class="form-inline mb-0">
+          <div class="input-group" style="max-width: 400px;">
+            <input type="text" name="search" class="form-control"
+                   placeholder="{{ trans('CampusStatus::campus-status.config.user-list.search-placeholder') }}"
+                   value="{{ search|default('') }}">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+              {% if search|default('') %}
+              <a href="{{ url(current_path()) }}" class="btn btn-secondary">
+                <i class="fas fa-times"></i>
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </form>
+      </div>
       <div class="card-body p-0">
         <table class="table table-striped">
           <thead>
@@ -83,11 +102,14 @@
           </tbody>
         </table>
       </div>
-      {% if users|default(null) and users.hasMorePages() %}
-      <div class="card-footer">
-        <nav>
+      {% if users|default(null) %}
+      <div class="card-footer clearfix">
+        <div class="float-right">
           {{ users.links()|raw }}
-        </nav>
+        </div>
+        <div class="float-left text-muted pt-2">
+          {{ trans('CampusStatus::campus-status.config.user-list.showing', {from: users.firstItem()|default(0), to: users.lastItem()|default(0), total: users.total()}) }}
+        </div>
       </div>
       {% endif %}
     </div>

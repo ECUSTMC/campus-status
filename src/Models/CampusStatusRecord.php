@@ -8,6 +8,10 @@ class CampusStatusRecord extends Model
 {
     protected $table = 'campus_status_records';
 
+    protected $primaryKey = 'uid';
+
+    public $incrementing = false;
+
     public $timestamps = false;
 
     protected $fillable = [
