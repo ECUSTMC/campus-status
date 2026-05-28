@@ -16,7 +16,7 @@
           <div>
             <h5 class="mb-0 text-success">{{ trans('CampusStatus::campus-status.page.on-campus') }}</h5>
             <p class="text-muted mb-0">{{ trans('CampusStatus::campus-status.page.verified-at', {time: verified_at.format('Y-m-d H:i')}) }}</p>
-            <p class="text-muted mb-0">{{ trans('CampusStatus::campus-status.page.valid-until', {date: valid_until.format('Y-m-d')}) }}</p>
+            <p class="text-muted mb-0">{{ trans('CampusStatus::campus-status.page.valid-until', {date: valid_until.format('Y-m-d H:i')}) }}</p>
           </div>
         </div>
         {% elseif status == 'off_campus' %}
