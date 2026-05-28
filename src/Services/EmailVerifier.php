@@ -2,6 +2,8 @@
 
 namespace CampusStatus\Services;
 
+use Carbon\Carbon;
+
 class EmailVerifier
 {
     public function verify(string $email): array
@@ -23,6 +25,7 @@ class EmailVerifier
         return [
             'valid' => false,
             'type' => null,
+            'graduation_date' => null,
             'message' => trans('CampusStatus::campus-status.page.email-verify-not-ecust'),
         ];
     }
@@ -34,10 +37,13 @@ class EmailVerifier
             $enrollYear = (int) substr($studentNumber, 0, 2);
             $currentYear = (int) date('y');
 
+            $graduationDate = Carbon::create(2000 + $enrollYear + 2, 6, 30, 23, 59, 59);
+
             if ($currentYear - $enrollYear < 2) {
                 return [
                     'valid' => true,
                     'type' => 'graduate',
+                    'graduation_date' => $graduationDate,
                     'message' => trans('CampusStatus::campus-status.page.email-verify-success-graduate'),
                 ];
             }
@@ -45,6 +51,7 @@ class EmailVerifier
             return [
                 'valid' => false,
                 'type' => 'graduate',
+                'graduation_date' => null,
                 'message' => trans('CampusStatus::campus-status.page.email-verify-fail-graduate'),
             ];
         }
@@ -53,10 +60,13 @@ class EmailVerifier
             $enrollYear = (int) substr($matches[1], 0, 2);
             $currentYear = (int) date('y');
 
+            $graduationDate = Carbon::create(2000 + $enrollYear + 4, 6, 30, 23, 59, 59);
+
             if ($currentYear - $enrollYear < 4) {
                 return [
                     'valid' => true,
                     'type' => 'undergraduate',
+                    'graduation_date' => $graduationDate,
                     'message' => trans('CampusStatus::campus-status.page.email-verify-success-undergraduate'),
                 ];
             }
@@ -64,6 +74,7 @@ class EmailVerifier
             return [
                 'valid' => false,
                 'type' => 'undergraduate',
+                'graduation_date' => null,
                 'message' => trans('CampusStatus::campus-status.page.email-verify-fail-undergraduate'),
             ];
         }
@@ -71,6 +82,7 @@ class EmailVerifier
         return [
             'valid' => false,
             'type' => null,
+            'graduation_date' => null,
             'message' => trans('CampusStatus::campus-status.page.email-verify-invalid-student'),
         ];
     }
@@ -81,6 +93,7 @@ class EmailVerifier
             return [
                 'valid' => true,
                 'type' => 'staff',
+                'graduation_date' => null,
                 'message' => trans('CampusStatus::campus-status.page.email-verify-success-staff'),
             ];
         }
@@ -88,6 +101,7 @@ class EmailVerifier
         return [
             'valid' => false,
             'type' => null,
+            'graduation_date' => null,
             'message' => trans('CampusStatus::campus-status.page.email-verify-invalid-staff'),
         ];
     }

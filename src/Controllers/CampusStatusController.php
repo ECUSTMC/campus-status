@@ -89,6 +89,12 @@ class CampusStatusController extends Controller
 
         $validityDays = (int) option('campus_status_validity_days', 365);
 
+        $expiresAt = now()->addDays($validityDays);
+
+        if ($result['graduation_date'] && $result['graduation_date']->lt($expiresAt)) {
+            $expiresAt = $result['graduation_date'];
+        }
+
         $record = CampusStatusRecord::where('uid', $user->uid)->first();
         if (!$record) {
             $record = new CampusStatusRecord();
@@ -97,7 +103,7 @@ class CampusStatusController extends Controller
 
         $record->ip = 'email';
         $record->verified_at = now();
-        $record->expires_at = now()->addDays($validityDays);
+        $record->expires_at = $expiresAt;
         $record->save();
 
         return json($result['message'], 0);
