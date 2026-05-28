@@ -17,7 +17,7 @@ class ConfigController extends Controller
         $form = Option::form('general', trans('CampusStatus::campus-status.config.general.title'), function (OptionForm $form) {
             $form->textarea('campus_status_cidr_ranges', trans('CampusStatus::campus-status.config.general.cidr-ranges.title'))
                 ->description(trans('CampusStatus::campus-status.config.general.cidr-ranges.description'))
-                ->rows(50);
+                ->rows(10);
 
             $form->text('campus_status_validity_days', trans('CampusStatus::campus-status.config.general.validity-period.title'))
                 ->description(trans('CampusStatus::campus-status.config.general.validity-period.description'));
