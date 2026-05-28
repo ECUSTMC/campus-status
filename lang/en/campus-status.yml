@@ -73,5 +73,6 @@ config:
     revoke-success: On-campus verification has been revoked
     revoke-fail: Failed to revoke verification
     search-placeholder: Search UID / Nickname / Email
+    filter-all: All
     showing: "Showing :from - :to of :total"
   invalid-cidr: "The following CIDR entries are invalid and have been ignored: :list"

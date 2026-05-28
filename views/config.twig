@@ -17,7 +17,7 @@
       </div>
       <div class="card-body">
         <form method="get" class="form-inline mb-0">
-          <div class="input-group" style="max-width: 400px;">
+          <div class="input-group mr-3" style="max-width: 400px;">
             <input type="text" name="search" class="form-control"
                    placeholder="{{ trans('CampusStatus::campus-status.config.user-list.search-placeholder') }}"
                    value="{{ search|default('') }}">
@@ -25,12 +25,30 @@
               <button class="btn btn-primary" type="submit">
                 <i class="fas fa-search"></i>
               </button>
-              {% if search|default('') %}
+              {% if search|default('') or status_filter|default('') %}
               <a href="{{ app.request.pathInfo }}" class="btn btn-secondary">
                 <i class="fas fa-times"></i>
               </a>
               {% endif %}
             </div>
+          </div>
+          <div class="btn-group" role="group">
+            <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status="
+               class="btn btn-sm {% if not status_filter|default('') %}btn-primary{% else %}btn-outline-primary{% endif %}">
+              {{ trans('CampusStatus::campus-status.config.user-list.filter-all') }}
+            </a>
+            <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=on_campus"
+               class="btn btn-sm {% if status_filter|default('') == 'on_campus' %}btn-success{% else %}btn-outline-success{% endif %}">
+              {{ trans('CampusStatus::campus-status.config.user-list.on-campus') }}
+            </a>
+            <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=off_campus"
+               class="btn btn-sm {% if status_filter|default('') == 'off_campus' %}btn-warning{% else %}btn-outline-warning{% endif %}">
+              {{ trans('CampusStatus::campus-status.config.user-list.off-campus') }}
+            </a>
+            <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=unverified"
+               class="btn btn-sm {% if status_filter|default('') == 'unverified' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">
+              {{ trans('CampusStatus::campus-status.config.user-list.unverified') }}
+            </a>
           </div>
         </form>
       </div>

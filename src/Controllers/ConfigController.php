@@ -58,6 +58,7 @@ class ConfigController extends Controller
         $form->addMessage(trans('CampusStatus::campus-status.config.stats.total', ['count' => $totalUsers]), 'info');
 
         $search = request()->query('search', '');
+        $statusFilter = request()->query('status', '');
 
         $query = User::orderBy('uid', 'desc');
 
@@ -69,7 +70,24 @@ class ConfigController extends Controller
             });
         }
 
-        $users = $query->paginate(20)->appends(['search' => $search]);
+        if ($statusFilter === 'on_campus') {
+            $query->whereIn('users.uid', function ($q) {
+                $q->select('uid')->from('campus_status_records')
+                  ->where('expires_at', '>', now());
+            });
+        } elseif ($statusFilter === 'off_campus') {
+            $query->whereIn('users.uid', function ($q) {
+                $q->select('uid')->from('campus_status_records')
+                  ->whereNotNull('expires_at')
+                  ->where('expires_at', '<=', now());
+            });
+        } elseif ($statusFilter === 'unverified') {
+            $query->whereNotIn('users.uid', function ($q) {
+                $q->select('uid')->from('campus_status_records');
+            });
+        }
+
+        $users = $query->paginate(20)->appends(['search' => $search, 'status' => $statusFilter]);
 
         $userStatuses = [];
 
@@ -90,6 +108,7 @@ class ConfigController extends Controller
             'users' => $users,
             'userStatuses' => $userStatuses,
             'search' => $search,
+            'status_filter' => $statusFilter,
         ]);
     }
 }
