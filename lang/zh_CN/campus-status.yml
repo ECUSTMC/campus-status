@@ -22,18 +22,18 @@ page:
   verify-fail: 认证失败，请确保你处于校园网内
   already-verified: 你已是有效的在校用户，无需重复认证
   renew-button: 续期认证
-  email-verify-title: 学工号邮箱认证
-  email-verify-description: 通过华东理工大学学工号邮箱认证在校身份，支持 @mail.ecust.edu.cn（学生）和 @ecust.edu.cn（教职工）邮箱。
-  email-verify-button: 通过邮箱认证
-  email-verify-fail: 邮箱认证失败，请稍后重试
+  email-verify-title: 学工号认证
+  email-verify-description: 通过华东理工大学学工号邮箱认证在校身份，系统将自动识别你的邮箱格式判断学工号类型，支持 @mail.ecust.edu.cn（学生）和 @ecust.edu.cn（教职工）邮箱。
+  email-verify-button: 通过学工号认证
+  email-verify-fail: 学工号认证失败，请稍后重试
   email-verify-not-ecust: 你的邮箱不属于华东理工大学学工号邮箱，无法通过此方式认证
   email-verify-invalid-student: 你的邮箱格式不符合学生学号要求（需为8位学号或Y+8位学号）
   email-verify-invalid-staff: 你的邮箱格式不符合教职工工号要求（需为5位数字工号）
   email-verify-success-undergraduate: 认证成功！你的在校状态已更新
   email-verify-success-graduate: 认证成功！你的在校状态已更新
   email-verify-success-staff: 认证成功！你的在校状态已更新
-  email-verify-fail-undergraduate: 你的学号已超过本科在校年限（4年），无法通过邮箱认证
-  email-verify-fail-graduate: 你的学号已超过研究生默认在校年限（按两年学制计算），无法通过邮箱认证。其他学制请通过 IP 验证，请谅解
+  email-verify-fail-undergraduate: 你的学号已超过本科在校年限（4年），无法通过学工号认证
+  email-verify-fail-graduate: 你的学号已超过研究生默认在校年限（按两年学制计算），无法通过学工号认证。其他学制请通过 IP 验证，请谅解
   email-verify-graduate-note: 研究生默认按两年学制计算在校年限，其他学制请通过 IP 验证，请谅解
 
 config:

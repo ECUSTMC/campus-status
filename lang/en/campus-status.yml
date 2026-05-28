@@ -61,7 +61,7 @@ config:
     unverified: Unverified
     verified-at: Verified At
     expires-at: Expires At
-    ip: Verified IP
+    ip: Verified IP/Method
     never: Never verified
     action: Action
     manual-verify: Manual Verify
