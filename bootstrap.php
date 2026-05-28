@@ -10,6 +10,7 @@ return function () {
             ->group(function () {
                 Route::get('', 'CampusStatusController@page');
                 Route::post('verify', 'CampusStatusController@verify');
+                Route::post('verify-by-email', 'CampusStatusController@verifyByEmail');
                 Route::get('check-ip', 'CampusStatusController@checkIp');
             });
 

@@ -18,6 +18,8 @@ class AdminController extends Controller
             return json(trans('CampusStatus::campus-status.config.user-list.manual-verify-fail'), 1);
         }
 
+        $validityDays = (int) option('campus_status_validity_days', 365);
+
         $record = CampusStatusRecord::where('uid', $uid)->first();
         if (!$record) {
             $record = new CampusStatusRecord();
@@ -26,6 +28,7 @@ class AdminController extends Controller
 
         $record->ip = 'manual';
         $record->verified_at = now();
+        $record->expires_at = now()->addDays($validityDays);
         $record->save();
 
         return json(trans('CampusStatus::campus-status.config.user-list.manual-verify-success'), 0);

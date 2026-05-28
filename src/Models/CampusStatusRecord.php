@@ -18,14 +18,20 @@ class CampusStatusRecord extends Model
         'uid',
         'ip',
         'verified_at',
+        'expires_at',
     ];
 
     protected $casts = [
         'verified_at' => 'datetime',
+        'expires_at' => 'datetime',
     ];
 
     public function isOnCampus(): bool
     {
+        if ($this->expires_at) {
+            return $this->expires_at->isFuture();
+        }
+
         if (!$this->verified_at) {
             return false;
         }

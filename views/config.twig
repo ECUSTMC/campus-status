@@ -43,6 +43,7 @@
               <th>{{ trans('CampusStatus::campus-status.config.user-list.email') }}</th>
               <th>{{ trans('CampusStatus::campus-status.config.user-list.status') }}</th>
               <th>{{ trans('CampusStatus::campus-status.config.user-list.verified-at') }}</th>
+              <th>{{ trans('CampusStatus::campus-status.config.user-list.expires-at') }}</th>
               <th>{{ trans('CampusStatus::campus-status.config.user-list.ip') }}</th>
               <th>{{ trans('CampusStatus::campus-status.config.user-list.action') }}</th>
             </tr>
@@ -67,6 +68,13 @@
                   {{ item.record.verified_at.format('Y-m-d H:i') }}
                 {% else %}
                   <span class="text-muted">{{ trans('CampusStatus::campus-status.config.user-list.never') }}</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if item.has_record and item.record.expires_at %}
+                  {{ item.record.expires_at.format('Y-m-d H:i') }}
+                {% else %}
+                  -
                 {% endif %}
               </td>
               <td>
@@ -96,7 +104,7 @@
             </tr>
             {% else %}
             <tr>
-              <td colspan="7" class="text-center text-muted py-3">{{ trans('CampusStatus::campus-status.config.user-list.unverified') }}</td>
+              <td colspan="8" class="text-center text-muted py-3">{{ trans('CampusStatus::campus-status.config.user-list.unverified') }}</td>
             </tr>
             {% endfor %}
           </tbody>

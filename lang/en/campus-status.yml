@@ -1,5 +1,5 @@
 title: Campus Verification
-description: Verify user on-campus status via IP, supporting IPv4/IPv6 CIDR campus network ranges
+description: Verify user on-campus status via IP or student/staff email, supporting IPv4/IPv6 CIDR campus network ranges
 plugin-title: Campus Status
 
 menu: Campus Verification
@@ -22,6 +22,19 @@ page:
   verify-fail: Verification failed. Please make sure you are on the campus network
   already-verified: You are already a valid on-campus user. No need to verify again
   renew-button: Renew Verification
+  email-verify-title: Student/Staff Email Verification
+  email-verify-description: Verify your on-campus status through ECUST student/staff email. Supports @mail.ecust.edu.cn (students) and @ecust.edu.cn (staff) emails.
+  email-verify-button: Verify via Email
+  email-verify-fail: Email verification failed. Please try again later
+  email-verify-not-ecust: Your email is not an ECUST student/staff email and cannot be used for verification
+  email-verify-invalid-student: Your email format does not match student ID requirements (8-digit ID or Y + 8-digit ID required)
+  email-verify-invalid-staff: Your email format does not match staff ID requirements (5-digit staff ID required)
+  email-verify-success-undergraduate: Verification successful! Your on-campus status has been updated
+  email-verify-success-graduate: Verification successful! Your on-campus status has been updated
+  email-verify-success-staff: Verification successful! Your on-campus status has been updated
+  email-verify-fail-undergraduate: Your student ID exceeds the undergraduate enrollment limit (4 years) and cannot be verified via email
+  email-verify-fail-graduate: Your student ID exceeds the graduate enrollment limit (calculated based on 2-year program). Other program durations please verify via IP. We appreciate your understanding
+  email-verify-graduate-note: Graduate students are calculated based on a 2-year program by default. Other program durations please verify via IP. We appreciate your understanding
 
 config:
   title: Plugin Settings
@@ -47,6 +60,7 @@ config:
     off-campus: Expired
     unverified: Unverified
     verified-at: Verified At
+    expires-at: Expires At
     ip: Verified IP
     never: Never verified
     action: Action

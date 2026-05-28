@@ -14,6 +14,7 @@ class CreateCampusStatusTable
                 $table->unsignedInteger('uid')->primary();
                 $table->string('ip', 45)->nullable();
                 $table->timestamp('verified_at')->nullable();
+                $table->timestamp('expires_at')->nullable();
             });
         }
     }

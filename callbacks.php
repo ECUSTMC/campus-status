@@ -21,6 +21,11 @@ return [
 
         $migrate = new \CampusStatus\Migrations\CreateCampusStatusTable();
         $migrate->up();
+
+        require_once __DIR__.'/src/Migrations/AddExpiresAtToCampusStatusTable.php';
+
+        $migrate = new \CampusStatus\Migrations\AddExpiresAtToCampusStatusTable();
+        $migrate->up();
     },
 
     PluginWasDisabled::class => function () {
