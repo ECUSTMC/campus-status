@@ -44,6 +44,9 @@
         <h3 class="card-title">{{ trans('CampusStatus::campus-status.page.ip-check') }}</h3>
       </div>
       <div class="card-body">
+        <p class="mb-3">
+          <code>{{ current_ip }}</code>
+        </p>
         {% if is_on_campus_ip %}
         <div class="alert alert-success mb-0">
           <i class="fas fa-wifi mr-1"></i>
@@ -51,7 +54,7 @@
         </div>
         {% else %}
         <div class="alert alert-secondary mb-0">
-          <i class="fas fa-wifi-slash mr-1"></i>
+          <i class="fas fa-times-circle mr-1"></i>
           {{ trans('CampusStatus::campus-status.page.ip-off-campus') }}
         </div>
         {% endif %}

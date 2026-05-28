@@ -12,6 +12,14 @@ return function () {
                 Route::post('verify', 'CampusStatusController@verify');
                 Route::get('check-ip', 'CampusStatusController@checkIp');
             });
+
+        Route::namespace('CampusStatus\Controllers')
+            ->prefix('admin/campus-status')
+            ->middleware(['web', 'auth', 'role:admin'])
+            ->group(function () {
+                Route::post('manual-verify/{uid}', 'AdminController@manualVerify');
+                Route::post('revoke/{uid}', 'AdminController@revoke');
+            });
     });
 
     Hook::addMenuItem('user', 10, [

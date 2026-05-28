@@ -14,6 +14,7 @@ page:
   expired: 已过期
   not-verified: 尚未认证
   ip-check: 当前网络检测
+  current-ip: "当前 IP：:ip"
   ip-on-campus: 你当前处于校园网内，可以认证为在校用户
   ip-off-campus: 你当前不在校园网内，无法进行在校认证
   verify-button: 认证为在校用户
@@ -48,4 +49,13 @@ config:
     verified-at: 认证时间
     ip: 认证 IP
     never: 从未认证
+    action: 操作
+    manual-verify: 手动认证
+    manual-verify-confirm: "确定要手动认证用户 :name 为在校用户吗？"
+    manual-verify-success: 已手动认证该用户为在校用户
+    manual-verify-fail: 手动认证失败
+    revoke: 撤销认证
+    revoke-confirm: "确定要撤销用户 :name 的在校认证吗？"
+    revoke-success: 已撤销该用户的在校认证
+    revoke-fail: 撤销认证失败
   invalid-cidr: "以下 CIDR 格式无效已被忽略：:list"

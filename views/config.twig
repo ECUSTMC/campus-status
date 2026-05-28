@@ -25,6 +25,7 @@
               <th>{{ trans('CampusStatus::campus-status.config.user-list.status') }}</th>
               <th>{{ trans('CampusStatus::campus-status.config.user-list.verified-at') }}</th>
               <th>{{ trans('CampusStatus::campus-status.config.user-list.ip') }}</th>
+              <th>{{ trans('CampusStatus::campus-status.config.user-list.action') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -56,10 +57,27 @@
                   -
                 {% endif %}
               </td>
+              <td>
+                {% if item.on_campus %}
+                <button class="btn btn-sm btn-outline-warning btn-revoke"
+                        data-uid="{{ item.uid }}"
+                        data-nickname="{{ item.nickname }}">
+                  <i class="fas fa-times"></i>
+                  {{ trans('CampusStatus::campus-status.config.user-list.revoke') }}
+                </button>
+                {% else %}
+                <button class="btn btn-sm btn-outline-primary btn-manual-verify"
+                        data-uid="{{ item.uid }}"
+                        data-nickname="{{ item.nickname }}">
+                  <i class="fas fa-check"></i>
+                  {{ trans('CampusStatus::campus-status.config.user-list.manual-verify') }}
+                </button>
+                {% endif %}
+              </td>
             </tr>
             {% else %}
             <tr>
-              <td colspan="6" class="text-center text-muted py-3">{{ trans('CampusStatus::campus-status.config.user-list.unverified') }}</td>
+              <td colspan="7" class="text-center text-muted py-3">{{ trans('CampusStatus::campus-status.config.user-list.unverified') }}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -75,4 +93,92 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block before_foot %}
+<script>
+(function() {
+  var csrfToken = '{{ csrf_token() }}';
+
+  document.querySelectorAll('.btn-manual-verify').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var uid = this.dataset.uid;
+      var nickname = this.dataset.nickname;
+
+      if (!confirm('{{ trans("CampusStatus::campus-status.config.user-list.manual-verify-confirm", {name: "__NAME__"}) }}'.replace('__NAME__', nickname))) {
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      fetch('/admin/campus-status/manual-verify/' + uid, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken,
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin'
+      })
+      .then(function(resp) { return resp.json(); })
+      .then(function(data) {
+        if (data.code === 0) {
+          location.reload();
+        } else {
+          alert(data.message);
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-check"></i> {{ trans("CampusStatus::campus-status.config.user-list.manual-verify") }}';
+        }
+      })
+      .catch(function() {
+        alert('{{ trans("CampusStatus::campus-status.config.user-list.manual-verify-fail") }}');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-check"></i> {{ trans("CampusStatus::campus-status.config.user-list.manual-verify") }}';
+      });
+    });
+  });
+
+  document.querySelectorAll('.btn-revoke').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var uid = this.dataset.uid;
+      var nickname = this.dataset.nickname;
+
+      if (!confirm('{{ trans("CampusStatus::campus-status.config.user-list.revoke-confirm", {name: "__NAME__"}) }}'.replace('__NAME__', nickname))) {
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      fetch('/admin/campus-status/revoke/' + uid, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken,
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin'
+      })
+      .then(function(resp) { return resp.json(); })
+      .then(function(data) {
+        if (data.code === 0) {
+          location.reload();
+        } else {
+          alert(data.message);
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-times"></i> {{ trans("CampusStatus::campus-status.config.user-list.revoke") }}';
+        }
+      })
+      .catch(function() {
+        alert('{{ trans("CampusStatus::campus-status.config.user-list.revoke-fail") }}');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-times"></i> {{ trans("CampusStatus::campus-status.config.user-list.revoke") }}';
+      });
+    });
+  });
+})();
+</script>
 {% endblock %}

@@ -14,6 +14,7 @@ page:
   expired: Expired
   not-verified: Not verified
   ip-check: Network Detection
+  current-ip: "Current IP: :ip"
   ip-on-campus: You are currently on the campus network and can verify your on-campus status
   ip-off-campus: You are not on the campus network and cannot verify your on-campus status
   verify-button: Verify as On-campus User
@@ -48,4 +49,13 @@ config:
     verified-at: Verified At
     ip: Verified IP
     never: Never verified
+    action: Action
+    manual-verify: Manual Verify
+    manual-verify-confirm: "Are you sure you want to manually verify user :name as on-campus?"
+    manual-verify-success: User has been manually verified as on-campus
+    manual-verify-fail: Manual verification failed
+    revoke: Revoke
+    revoke-confirm: "Are you sure you want to revoke the on-campus verification for user :name?"
+    revoke-success: On-campus verification has been revoked
+    revoke-fail: Failed to revoke verification
   invalid-cidr: "The following CIDR entries are invalid and have been ignored: :list"
