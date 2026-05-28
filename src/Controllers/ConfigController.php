@@ -21,7 +21,9 @@ class ConfigController extends Controller
 
             $form->text('campus_status_validity_days', trans('CampusStatus::campus-status.config.general.validity-period.title'))
                 ->description(trans('CampusStatus::campus-status.config.general.validity-period.description'));
-        })->after(function () {
+        });
+
+        $form->after(function () use ($form) {
             $checker = new CampusIpChecker();
             $invalid = $checker->getInvalidCidrEntries();
             if (!empty($invalid)) {
@@ -30,7 +32,9 @@ class ConfigController extends Controller
                     'warning'
                 );
             }
-        })->handle();
+        });
+
+        $form->handle();
 
         $totalUsers = User::count();
         $verifiedCount = CampusStatusRecord::count();

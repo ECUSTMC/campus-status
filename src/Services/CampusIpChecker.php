@@ -36,8 +36,9 @@ class CampusIpChecker
 
         $valid = [];
         foreach ($lines as $line) {
-            if ($this->isValidCidr($line)) {
-                $valid[] = $line;
+            $normalized = $this->normalizeCidr($line);
+            if ($normalized !== null) {
+                $valid[] = $normalized;
             }
         }
 
@@ -59,12 +60,31 @@ class CampusIpChecker
 
         $invalid = [];
         foreach ($lines as $line) {
-            if (!$this->isValidCidr($line)) {
+            if ($this->normalizeCidr($line) === null) {
                 $invalid[] = $line;
             }
         }
 
         return $invalid;
+    }
+
+    public function normalizeCidr(string $entry): ?string
+    {
+        $entry = trim($entry);
+
+        if (strpos($entry, '/') !== false) {
+            return $this->isValidCidr($entry) ? $entry : null;
+        }
+
+        if (filter_var($entry, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            return $entry . '/32';
+        }
+
+        if (filter_var($entry, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            return $entry . '/128';
+        }
+
+        return null;
     }
 
     public function isValidCidr(string $cidr): bool
