@@ -117,10 +117,39 @@
       </div>
     </div>
   </div>
+
+  <div class="col-md-4 col-lg-6">
+    {% if benefits_html %}
+    <div class="card card-success">
+      <div class="card-header">
+        <h3 class="card-title">{{ trans('CampusStatus::campus-status.page.benefits-title') }}</h3>
+      </div>
+      <div class="card-body benefits-content">
+        {{ benefits_html|raw }}
+      </div>
+    </div>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
 
 {% block before_foot %}
+<style>
+.benefits-content h1 { font-size: 1.5rem; }
+.benefits-content h2 { font-size: 1.3rem; }
+.benefits-content h3 { font-size: 1.15rem; }
+.benefits-content ul { padding-left: 1.5rem; }
+.benefits-content ol { padding-left: 1.5rem; }
+.benefits-content a { color: #007bff; }
+.benefits-content a:hover { text-decoration: underline; }
+.benefits-content code { background: #f4f4f5; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.9em; }
+.benefits-content pre { background: #f4f4f5; padding: 0.8rem; border-radius: 5px; overflow-x: auto; }
+.benefits-content pre code { background: none; padding: 0; }
+.benefits-content blockquote { border-left: 4px solid #007bff; padding-left: 1rem; color: #6c757d; margin-left: 0; }
+.benefits-content table { width: 100%; border-collapse: collapse; margin-bottom: 0.5rem; }
+.benefits-content th, .benefits-content td { border: 1px solid #dee2e6; padding: 0.4rem 0.6rem; }
+.benefits-content th { background: #f4f4f5; }
+</style>
 <script>
 (function() {
   var csrfToken = '{{ csrf_token() }}';

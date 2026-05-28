@@ -47,6 +47,9 @@ config:
     validity-period:
       title: 有效期（天）
       description: 在校状态的有效天数，从认证时间起算。默认 365 天（一年）。
+    benefits:
+      title: 认证福利
+      description: 在校认证页面上展示的福利信息，支持 Markdown 语法。留空则不显示福利版块。
   stats:
     on-campus: "在校用户：:count 人"
     off-campus: "离校用户：:count 人"

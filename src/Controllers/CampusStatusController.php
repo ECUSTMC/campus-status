@@ -9,6 +9,7 @@ use CampusStatus\Services\EmailVerifier;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Parsedown;
 
 class CampusStatusController extends Controller
 {
@@ -38,6 +39,13 @@ class CampusStatusController extends Controller
         $emailVerifier = new EmailVerifier();
         $emailResult = $emailVerifier->verify($user->email);
 
+        $benefitsRaw = option('campus_status_benefits', '');
+        $benefitsHtml = '';
+        if (!empty($benefitsRaw)) {
+            $parsedown = new Parsedown();
+            $benefitsHtml = $parsedown->text($benefitsRaw);
+        }
+
         return view('CampusStatus::index', [
             'is_on_campus_ip' => $isOnCampus,
             'status' => $status,
@@ -47,6 +55,7 @@ class CampusStatusController extends Controller
             'validity_days' => $validityDays,
             'user_email' => $user->email,
             'email_verify_result' => $emailResult,
+            'benefits_html' => $benefitsHtml,
         ]);
     }
 

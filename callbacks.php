@@ -9,6 +9,7 @@ return [
         $items = [
             'campus_status_cidr_ranges' => '',
             'campus_status_validity_days' => '365',
+            'campus_status_benefits' => '',
         ];
 
         foreach ($items as $key => $value) {

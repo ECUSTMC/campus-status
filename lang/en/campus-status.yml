@@ -47,6 +47,9 @@ config:
     validity-period:
       title: Validity Period (Days)
       description: Number of days the on-campus status remains valid from the verification time. Default is 365 days (1 year).
+    benefits:
+      title: Verification Benefits
+      description: Benefits information displayed on the verification page. Supports Markdown syntax. Leave empty to hide the benefits section.
   stats:
     on-campus: "On-campus users: :count"
     off-campus: "Off-campus users: :count"

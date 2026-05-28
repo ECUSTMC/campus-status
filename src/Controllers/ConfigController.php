@@ -21,6 +21,10 @@ class ConfigController extends Controller
 
             $form->text('campus_status_validity_days', trans('CampusStatus::campus-status.config.general.validity-period.title'))
                 ->description(trans('CampusStatus::campus-status.config.general.validity-period.description'));
+
+            $form->textarea('campus_status_benefits', trans('CampusStatus::campus-status.config.general.benefits.title'))
+                ->description(trans('CampusStatus::campus-status.config.general.benefits.description'))
+                ->rows(10);
         });
 
         $form->after(function () use ($form) {
