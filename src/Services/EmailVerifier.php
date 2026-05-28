@@ -35,11 +35,10 @@ class EmailVerifier
         if (preg_match('/^[Yy](\d{8})$/', $localPart, $matches)) {
             $studentNumber = $matches[1];
             $enrollYear = (int) substr($studentNumber, 2, 2);
-            $currentYear = (int) date('y');
 
             $graduationDate = Carbon::create(2000 + $enrollYear + 2, 6, 30, 23, 59, 59);
 
-            if ($currentYear - $enrollYear < 2) {
+            if ($graduationDate->isFuture()) {
                 return [
                     'valid' => true,
                     'type' => 'graduate',
@@ -58,11 +57,10 @@ class EmailVerifier
 
         if (preg_match('/^(\d{8})$/', $localPart, $matches)) {
             $enrollYear = (int) substr($matches[1], 0, 2);
-            $currentYear = (int) date('y');
 
             $graduationDate = Carbon::create(2000 + $enrollYear + 4, 6, 30, 23, 59, 59);
 
-            if ($currentYear - $enrollYear < 4) {
+            if ($graduationDate->isFuture()) {
                 return [
                     'valid' => true,
                     'type' => 'undergraduate',
