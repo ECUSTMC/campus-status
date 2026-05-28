@@ -26,7 +26,7 @@
                 <i class="fas fa-search"></i>
               </button>
               {% if search|default('') %}
-              <a href="{{ url(current_path()) }}" class="btn btn-secondary">
+              <a href="{{ app.request.pathInfo }}" class="btn btn-secondary">
                 <i class="fas fa-times"></i>
               </a>
               {% endif %}
