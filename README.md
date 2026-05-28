@@ -72,7 +72,7 @@ BlessingSkin Server 6 插件，通过 IP 或学工号校验用户在校状态。
 ### 数据库迁移
 
 - **新安装**：插件启用时自动创建包含 `expires_at` 列的完整表
-- **旧版升级**：`bootstrap.php` 每次请求会检测 `expires_at` 列是否存在，缺失时自动添加并根据已有 `verified_at` 回填过期时间
+- **旧版升级**：`bootstrap.php` 首次请求时检测 `expires_at` 列是否存在，缺失时自动添加并根据已有 `verified_at` 回填过期时间，完成后缓存标记不再重复执行
 
 ## 学工号认证规则
 

@@ -1,8 +1,19 @@
 <?php
 
 use App\Services\Hook;
+use Illuminate\Support\Facades\Cache;
+use CampusStatus\Migrations\AddExpiresAtToCampusStatusTable;
 
 return function () {
+    if (!Cache::get('campus_status_expires_at_migrated')) {
+        require_once __DIR__.'/src/Migrations/AddExpiresAtToCampusStatusTable.php';
+
+        $migrate = new AddExpiresAtToCampusStatusTable();
+        $migrate->up();
+
+        Cache::forever('campus_status_expires_at_migrated', true);
+    }
+
     Hook::addRoute(function () {
         Route::namespace('CampusStatus\Controllers')
             ->prefix('user/campus-status')
