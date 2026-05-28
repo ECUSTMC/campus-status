@@ -9,7 +9,7 @@ use CampusStatus\Services\EmailVerifier;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Parsedown;
+use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 class CampusStatusController extends Controller
 {
@@ -42,8 +42,8 @@ class CampusStatusController extends Controller
         $benefitsRaw = option('campus_status_benefits', '');
         $benefitsHtml = '';
         if (!empty($benefitsRaw)) {
-            $parsedown = new Parsedown();
-            $benefitsHtml = $parsedown->text($benefitsRaw);
+            $converter = new GithubFlavoredMarkdownConverter();
+            $benefitsHtml = $converter->convertToHtml($benefitsRaw)->getContent();
         }
 
         return view('CampusStatus::index', [
