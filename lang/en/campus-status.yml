@@ -17,6 +17,7 @@ page:
   current-ip: "Current IP: :ip"
   ip-on-campus: You are currently on the campus network and can verify your on-campus status
   ip-off-campus: You are not on the campus network and cannot verify your on-campus status
+  ip-off-campus-vpn: If you are off campus, you can connect via <a href=":url" target="_blank">SSLVPN</a> to verify
   verify-button: Verify as On-campus User
   verify-success: Verification successful! Your on-campus status has been updated
   verify-fail: Verification failed. Please make sure you are on the campus network

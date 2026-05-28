@@ -17,6 +17,7 @@ page:
   current-ip: "当前 IP：:ip"
   ip-on-campus: 你当前处于校园网内，可以认证为在校用户
   ip-off-campus: 你当前不在校园网内，无法进行在校认证
+  ip-off-campus-vpn: 如不在校内，可通过 <a href=":url" target="_blank">SSLVPN</a> 连接校园网后认证
   verify-button: 认证为在校用户
   verify-success: 认证成功！你的在校状态已更新
   verify-fail: 认证失败，请确保你处于校园网内
