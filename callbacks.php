@@ -17,6 +17,8 @@ return [
             }
         }
 
+        require_once __DIR__.'/src/Migrations/CreateCampusStatusTable.php';
+
         $migrate = new \CampusStatus\Migrations\CreateCampusStatusTable();
         $migrate->up();
     },
