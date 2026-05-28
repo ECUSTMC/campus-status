@@ -36,6 +36,7 @@ page:
   email-verify-fail-undergraduate: 你的学号已超过本科在校年限（4年），无法通过学工号认证
   email-verify-fail-graduate: 你的学号已超过研究生默认在校年限（按两年学制计算），无法通过学工号认证。其他学制请通过 IP 验证，请谅解
   email-verify-graduate-note: 研究生默认按两年学制计算在校年限，其他学制请通过 IP 验证，请谅解
+  benefits-title: 认证福利
 
 config:
   title: 插件配置

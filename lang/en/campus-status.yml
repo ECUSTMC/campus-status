@@ -36,6 +36,7 @@ page:
   email-verify-fail-undergraduate: Your student ID exceeds the undergraduate enrollment limit (4 years) and cannot be verified via email
   email-verify-fail-graduate: Your student ID exceeds the graduate enrollment limit (calculated based on 2-year program). Other program durations please verify via IP. We appreciate your understanding
   email-verify-graduate-note: Graduate students are calculated based on a 2-year program by default. Other program durations please verify via IP. We appreciate your understanding
+  benefits-title: Verification Benefits
 
 config:
   title: Plugin Settings
