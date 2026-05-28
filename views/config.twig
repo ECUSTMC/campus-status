@@ -1,0 +1,78 @@
+{% extends 'admin.base' %}
+
+{% block title %}{{ trans('CampusStatus::campus-status.plugin-title') }} - {{ trans('CampusStatus::campus-status.config.title') }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    {{ form|raw }}
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card card-info">
+      <div class="card-header">
+        <h3 class="card-title">{{ trans('CampusStatus::campus-status.config.user-list.title') }}</h3>
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>UID</th>
+              <th>{{ trans('CampusStatus::campus-status.config.user-list.nickname') }}</th>
+              <th>{{ trans('CampusStatus::campus-status.config.user-list.email') }}</th>
+              <th>{{ trans('CampusStatus::campus-status.config.user-list.status') }}</th>
+              <th>{{ trans('CampusStatus::campus-status.config.user-list.verified-at') }}</th>
+              <th>{{ trans('CampusStatus::campus-status.config.user-list.ip') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in userStatuses %}
+            <tr>
+              <td>{{ item.uid }}</td>
+              <td>{{ item.nickname }}</td>
+              <td>{{ item.email }}</td>
+              <td>
+                {% if not item.has_record %}
+                  <span class="badge badge-secondary">{{ trans('CampusStatus::campus-status.config.user-list.unverified') }}</span>
+                {% elseif item.on_campus %}
+                  <span class="badge badge-success">{{ trans('CampusStatus::campus-status.config.user-list.on-campus') }}</span>
+                {% else %}
+                  <span class="badge badge-warning">{{ trans('CampusStatus::campus-status.config.user-list.off-campus') }}</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if item.has_record and item.record.verified_at %}
+                  {{ item.record.verified_at.format('Y-m-d H:i') }}
+                {% else %}
+                  <span class="text-muted">{{ trans('CampusStatus::campus-status.config.user-list.never') }}</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if item.has_record and item.record.ip %}
+                  <code>{{ item.record.ip }}</code>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="6" class="text-center text-muted py-3">{{ trans('CampusStatus::campus-status.config.user-list.unverified') }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if users|default(null) and users.hasMorePages() %}
+      <div class="card-footer">
+        <nav>
+          {{ users.links()|raw }}
+        </nav>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

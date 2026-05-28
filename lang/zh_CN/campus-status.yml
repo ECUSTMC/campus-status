@@ -1,0 +1,51 @@
+title: 在校认证
+description: 通过 IP 校验用户在校状态，支持 IPv4/IPv6 CIDR 校园网段配置
+plugin-title: 在校状态校验
+
+menu: 在校认证
+
+page:
+  title: 在校认证
+  current-status: 当前状态
+  on-campus: 在校用户
+  off-campus: 非在校用户
+  verified-at: "认证时间：:time"
+  valid-until: "有效期至：:date"
+  expired: 已过期
+  not-verified: 尚未认证
+  ip-check: 当前网络检测
+  ip-on-campus: 你当前处于校园网内，可以认证为在校用户
+  ip-off-campus: 你当前不在校园网内，无法进行在校认证
+  verify-button: 认证为在校用户
+  verify-success: 认证成功！你的在校状态已更新
+  verify-fail: 认证失败，请确保你处于校园网内
+  already-verified: 你已是有效的在校用户，无需重复认证
+  renew-button: 续期认证
+
+config:
+  title: 插件配置
+  general:
+    title: 基本设置
+    cidr-ranges:
+      title: 校园网 IP 段
+      description: 每行一个 CIDR，同时支持 IPv4 和 IPv6 格式。例如 10.0.0.0/8 或 2001:da8::/32。留空则禁用 IP 校验。
+    validity-period:
+      title: 有效期（天）
+      description: 在校状态的有效天数，从认证时间起算。默认 365 天（一年）。
+  stats:
+    on-campus: "在校用户：:count 人"
+    off-campus: "离校用户：:count 人"
+    unverified: "未认证用户：:count 人"
+    total: "总用户数：:count 人"
+  user-list:
+    title: 用户在校状态列表
+    nickname: 昵称
+    email: 邮箱
+    status: 状态
+    on-campus: 在校
+    off-campus: 已过期
+    unverified: 未认证
+    verified-at: 认证时间
+    ip: 认证 IP
+    never: 从未认证
+  invalid-cidr: "以下 CIDR 格式无效已被忽略：:list"

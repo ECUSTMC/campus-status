@@ -1,0 +1,14 @@
+{
+  "name": "campus-status",
+  "version": "1.0.0",
+  "title": "在校状态校验",
+  "description": "CampusStatus::campus-status.description",
+  "namespace": "CampusStatus",
+  "require": {
+    "blessing-skin-server": "^6",
+    "php": "^8.0"
+  },
+  "enchants": {
+    "config": "Controllers\\ConfigController"
+  }
+}

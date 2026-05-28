@@ -1,0 +1,51 @@
+title: Campus Verification
+description: Verify user on-campus status via IP, supporting IPv4/IPv6 CIDR campus network ranges
+plugin-title: Campus Status
+
+menu: Campus Verification
+
+page:
+  title: Campus Verification
+  current-status: Current Status
+  on-campus: On-campus User
+  off-campus: Off-campus User
+  verified-at: "Verified at: :time"
+  valid-until: "Valid until: :date"
+  expired: Expired
+  not-verified: Not verified
+  ip-check: Network Detection
+  ip-on-campus: You are currently on the campus network and can verify your on-campus status
+  ip-off-campus: You are not on the campus network and cannot verify your on-campus status
+  verify-button: Verify as On-campus User
+  verify-success: Verification successful! Your on-campus status has been updated
+  verify-fail: Verification failed. Please make sure you are on the campus network
+  already-verified: You are already a valid on-campus user. No need to verify again
+  renew-button: Renew Verification
+
+config:
+  title: Plugin Settings
+  general:
+    title: General Settings
+    cidr-ranges:
+      title: Campus IP Ranges
+      description: One CIDR per line, supporting both IPv4 and IPv6. E.g. 10.0.0.0/8 or 2001:da8::/32. Leave empty to disable IP verification.
+    validity-period:
+      title: Validity Period (Days)
+      description: Number of days the on-campus status remains valid from the verification time. Default is 365 days (1 year).
+  stats:
+    on-campus: "On-campus users: :count"
+    off-campus: "Off-campus users: :count"
+    unverified: "Unverified users: :count"
+    total: "Total users: :count"
+  user-list:
+    title: User Campus Status List
+    nickname: Nickname
+    email: Email
+    status: Status
+    on-campus: On Campus
+    off-campus: Expired
+    unverified: Unverified
+    verified-at: Verified At
+    ip: Verified IP
+    never: Never verified
+  invalid-cidr: "The following CIDR entries are invalid and have been ignored: :list"
