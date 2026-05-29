@@ -41,11 +41,11 @@ class ConfigController extends Controller
         $form->handle();
 
         $totalUsers = User::count();
-        $verifiedCount = CampusStatusRecord::count();
+        $verifiedCount = CampusStatusRecord::whereNotNull('verified_at')->count();
         $onCampusCount = 0;
         $offCampusCount = 0;
 
-        $records = CampusStatusRecord::all();
+        $records = CampusStatusRecord::whereNotNull('verified_at')->get();
         foreach ($records as $record) {
             if ($record->isOnCampus()) {
                 $onCampusCount++;
@@ -54,11 +54,13 @@ class ConfigController extends Controller
             }
         }
 
-        $unverifiedCount = $totalUsers - $verifiedCount;
+        $failedCount = CampusStatusRecord::where('ip', 'email_failed')->count();
+        $unverifiedCount = $totalUsers - $verifiedCount - $failedCount;
 
         $form->addMessage(trans('CampusStatus::campus-status.config.stats.on-campus', ['count' => $onCampusCount]), 'success');
         $form->addMessage(trans('CampusStatus::campus-status.config.stats.off-campus', ['count' => $offCampusCount]), 'warning');
         $form->addMessage(trans('CampusStatus::campus-status.config.stats.unverified', ['count' => $unverifiedCount]), 'info');
+        $form->addMessage(trans('CampusStatus::campus-status.config.stats.failed', ['count' => $failedCount]), 'danger');
         $form->addMessage(trans('CampusStatus::campus-status.config.stats.total', ['count' => $totalUsers]), 'info');
 
         $search = request()->query('search', '');
@@ -88,6 +90,11 @@ class ConfigController extends Controller
         } elseif ($statusFilter === 'unverified') {
             $query->whereNotIn('users.uid', function ($q) {
                 $q->select('uid')->from('campus_status_records');
+            });
+        } elseif ($statusFilter === 'failed') {
+            $query->whereIn('users.uid', function ($q) {
+                $q->select('uid')->from('campus_status_records')
+                  ->where('ip', 'email_failed');
             });
         }
 

@@ -64,6 +64,7 @@ config:
     on-campus: 在校
     off-campus: 已过期
     unverified: 未认证
+    failed: 验证不通过
     verified-at: 认证时间
     expires-at: 过期时间
     ip: 认证 IP

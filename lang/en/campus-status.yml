@@ -55,6 +55,7 @@ config:
     on-campus: "On-campus users: :count"
     off-campus: "Off-campus users: :count"
     unverified: "Unverified users: :count"
+    failed: "Verification failed: :count"
     total: "Total users: :count"
   user-list:
     title: User Campus Status List

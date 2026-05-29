@@ -50,6 +50,10 @@
                  class="btn btn-sm {% if status_filter|default('') == 'unverified' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">
                 {{ trans('CampusStatus::campus-status.config.user-list.unverified') }}
               </a>
+              <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=failed"
+                 class="btn btn-sm {% if status_filter|default('') == 'failed' %}btn-danger{% else %}btn-outline-danger{% endif %}">
+                {{ trans('CampusStatus::campus-status.config.user-list.failed') }}
+              </a>
             </div>
             <button id="btn-batch-verify" class="btn btn-sm btn-info ml-sm-2 mb-2 mb-sm-0">
               <i class="fas fa-bolt"></i>
@@ -81,6 +85,8 @@
               <td>
                 {% if not item.has_record %}
                   <span class="badge badge-secondary">{{ trans('CampusStatus::campus-status.config.user-list.unverified') }}</span>
+                {% elseif item.record.ip == 'email_failed' %}
+                  <span class="badge badge-danger">{{ trans('CampusStatus::campus-status.config.user-list.failed') }}</span>
                 {% elseif item.on_campus %}
                   <span class="badge badge-success">{{ trans('CampusStatus::campus-status.config.user-list.on-campus') }}</span>
                 {% else %}
@@ -141,7 +147,7 @@
             {{ trans('CampusStatus::campus-status.config.user-list.showing', {from: users.firstItem()|default(0), to: users.lastItem()|default(0), total: users.total()}) }}
           </div>
           <div class="d-none d-sm-block">
-            {{ users.links()|raw }}
+            {{ users.onEachSide(1).links()|raw }}
           </div>
           <div class="d-block d-sm-none">
             <div class="btn-group btn-group-sm">

@@ -19,6 +19,16 @@ class AutoVerifier
         $result = $verifier->verify($email);
 
         if (!$result['valid']) {
+            $record = CampusStatusRecord::where('uid', $uid)->first();
+            if (!$record) {
+                $record = new CampusStatusRecord();
+                $record->uid = $uid;
+                $record->ip = 'email_failed';
+                $record->verified_at = null;
+                $record->expires_at = null;
+                $record->save();
+            }
+
             return false;
         }
 
