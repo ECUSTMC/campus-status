@@ -4,6 +4,7 @@ namespace CampusStatus\Controllers;
 
 use App\Models\User;
 use CampusStatus\Models\CampusStatusRecord;
+use CampusStatus\Services\AutoVerifier;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -43,5 +44,13 @@ class AdminController extends Controller
         }
 
         return json(trans('CampusStatus::campus-status.config.user-list.revoke-success'), 0);
+    }
+
+    public function batchVerify(Request $request): JsonResponse
+    {
+        $autoVerifier = new AutoVerifier();
+        $count = $autoVerifier->batchVerify();
+
+        return json(trans('CampusStatus::campus-status.config.user-list.batch-verify-success', ['count' => $count]), 0);
     }
 }

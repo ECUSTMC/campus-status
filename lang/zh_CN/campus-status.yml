@@ -79,5 +79,9 @@ config:
     revoke-fail: 撤销认证失败
     search-placeholder: 搜索 UID / 昵称 / 邮箱
     filter-all: 全部
+    batch-verify: 一键学工号验证
+    batch-verify-confirm: 确定要对所有未认证用户进行学工号邮箱验证吗？仅符合学工号规则的邮箱会被自动认证。
+    batch-verify-success: "批量验证完成，共 :count 人通过学工号认证"
+    batch-verify-fail: 批量验证失败，请稍后重试
     showing: "显示 :from - :to，共 :total 条"
   invalid-cidr: "以下 CIDR 格式无效已被忽略：:list"

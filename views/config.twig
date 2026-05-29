@@ -16,44 +16,50 @@
         <h3 class="card-title">{{ trans('CampusStatus::campus-status.config.user-list.title') }}</h3>
       </div>
       <div class="card-body">
-        <form method="get" class="form-inline mb-0">
-          <div class="input-group mr-3" style="max-width: 400px;">
-            <input type="text" name="search" class="form-control"
-                   placeholder="{{ trans('CampusStatus::campus-status.config.user-list.search-placeholder') }}"
-                   value="{{ search|default('') }}">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-              {% if search|default('') or status_filter|default('') %}
-              <a href="{{ app.request.pathInfo }}" class="btn btn-secondary">
-                <i class="fas fa-times"></i>
-              </a>
-              {% endif %}
+        <form method="get" class="mb-0">
+          <div class="d-flex flex-wrap align-items-center">
+            <div class="input-group mr-sm-2 mb-2 mb-sm-0" style="max-width: 400px; flex: 1 1 250px;">
+              <input type="text" name="search" class="form-control"
+                     placeholder="{{ trans('CampusStatus::campus-status.config.user-list.search-placeholder') }}"
+                     value="{{ search|default('') }}">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                {% if search|default('') or status_filter|default('') %}
+                <a href="{{ app.request.pathInfo }}" class="btn btn-secondary">
+                  <i class="fas fa-times"></i>
+                </a>
+                {% endif %}
+              </div>
             </div>
-          </div>
-          <div class="btn-group" role="group">
-            <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status="
-               class="btn btn-sm {% if not status_filter|default('') %}btn-primary{% else %}btn-outline-primary{% endif %}">
-              {{ trans('CampusStatus::campus-status.config.user-list.filter-all') }}
-            </a>
-            <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=on_campus"
-               class="btn btn-sm {% if status_filter|default('') == 'on_campus' %}btn-success{% else %}btn-outline-success{% endif %}">
-              {{ trans('CampusStatus::campus-status.config.user-list.on-campus') }}
-            </a>
-            <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=off_campus"
-               class="btn btn-sm {% if status_filter|default('') == 'off_campus' %}btn-warning{% else %}btn-outline-warning{% endif %}">
-              {{ trans('CampusStatus::campus-status.config.user-list.off-campus') }}
-            </a>
-            <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=unverified"
-               class="btn btn-sm {% if status_filter|default('') == 'unverified' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">
-              {{ trans('CampusStatus::campus-status.config.user-list.unverified') }}
-            </a>
+            <div class="btn-group mb-2 mb-sm-0" role="group">
+              <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status="
+                 class="btn btn-sm {% if not status_filter|default('') %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                {{ trans('CampusStatus::campus-status.config.user-list.filter-all') }}
+              </a>
+              <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=on_campus"
+                 class="btn btn-sm {% if status_filter|default('') == 'on_campus' %}btn-success{% else %}btn-outline-success{% endif %}">
+                {{ trans('CampusStatus::campus-status.config.user-list.on-campus') }}
+              </a>
+              <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=off_campus"
+                 class="btn btn-sm {% if status_filter|default('') == 'off_campus' %}btn-warning{% else %}btn-outline-warning{% endif %}">
+                {{ trans('CampusStatus::campus-status.config.user-list.off-campus') }}
+              </a>
+              <a href="{{ app.request.pathInfo }}?search={{ search|default('') }}&status=unverified"
+                 class="btn btn-sm {% if status_filter|default('') == 'unverified' %}btn-secondary{% else %}btn-outline-secondary{% endif %}">
+                {{ trans('CampusStatus::campus-status.config.user-list.unverified') }}
+              </a>
+            </div>
+            <button id="btn-batch-verify" class="btn btn-sm btn-info ml-sm-2 mb-2 mb-sm-0">
+              <i class="fas fa-bolt"></i>
+              {{ trans('CampusStatus::campus-status.config.user-list.batch-verify') }}
+            </button>
           </div>
         </form>
       </div>
-      <div class="card-body p-0">
-        <table class="table table-striped">
+      <div class="table-responsive">
+        <table class="table table-striped text-nowrap">
           <thead>
             <tr>
               <th>UID</th>
@@ -129,12 +135,14 @@
         </table>
       </div>
       {% if users|default(null) %}
-      <div class="card-footer clearfix">
-        <div class="float-right">
-          {{ users.links()|raw }}
-        </div>
-        <div class="float-left text-muted pt-2">
-          {{ trans('CampusStatus::campus-status.config.user-list.showing', {from: users.firstItem()|default(0), to: users.lastItem()|default(0), total: users.total()}) }}
+      <div class="card-footer">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+          <div class="text-muted mb-2 mb-sm-0">
+            {{ trans('CampusStatus::campus-status.config.user-list.showing', {from: users.firstItem()|default(0), to: users.lastItem()|default(0), total: users.total()}) }}
+          </div>
+          <div>
+            {{ users.links()|raw }}
+          </div>
         </div>
       </div>
       {% endif %}
@@ -147,6 +155,40 @@
 <script>
 (function() {
   var csrfToken = '{{ csrf_token() }}';
+
+  var batchBtn = document.getElementById('btn-batch-verify');
+  if (batchBtn) {
+    batchBtn.addEventListener('click', function() {
+      if (!confirm('{{ trans("CampusStatus::campus-status.config.user-list.batch-verify-confirm") }}')) {
+        return;
+      }
+
+      batchBtn.disabled = true;
+      var originalHtml = batchBtn.innerHTML;
+      batchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      fetch('/admin/campus-status/batch-verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken,
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin'
+      })
+      .then(function(resp) { return resp.json(); })
+      .then(function(data) {
+        alert(data.message);
+        location.reload();
+      })
+      .catch(function() {
+        alert('{{ trans("CampusStatus::campus-status.config.user-list.batch-verify-fail") }}');
+        batchBtn.disabled = false;
+        batchBtn.innerHTML = originalHtml;
+      });
+    });
+  }
 
   document.querySelectorAll('.btn-manual-verify').forEach(function(btn) {
     btn.addEventListener('click', function() {

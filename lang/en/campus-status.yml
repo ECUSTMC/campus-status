@@ -79,5 +79,9 @@ config:
     revoke-fail: Failed to revoke verification
     search-placeholder: Search UID / Nickname / Email
     filter-all: All
+    batch-verify: Batch Student/Staff Verify
+    batch-verify-confirm: Are you sure you want to verify all unverified users via student/staff ID? Only emails matching the rules will be auto-verified.
+    batch-verify-success: "Batch verification completed. :count users verified via student/staff ID"
+    batch-verify-fail: Batch verification failed. Please try again later
     showing: "Showing :from - :to of :total"
   invalid-cidr: "The following CIDR entries are invalid and have been ignored: :list"

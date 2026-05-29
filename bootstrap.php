@@ -31,6 +31,7 @@ return function () {
             ->group(function () {
                 Route::post('manual-verify/{uid}', 'AdminController@manualVerify');
                 Route::post('revoke/{uid}', 'AdminController@revoke');
+                Route::post('batch-verify', 'AdminController@batchVerify');
             });
     });
 
