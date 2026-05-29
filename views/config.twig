@@ -138,10 +138,32 @@
       <div class="card-footer">
         <div class="d-flex flex-wrap justify-content-between align-items-center">
           <div class="text-muted mb-2 mb-sm-0">
-            {{ trans('CampusStatus::campus-status.config.user-list.showing', {from: users.firstItem()|default(0), to: users.lastItem()|default(0), total: users.count()}) }}
+            {{ trans('CampusStatus::campus-status.config.user-list.showing', {from: users.firstItem()|default(0), to: users.lastItem()|default(0), total: users.total()}) }}
           </div>
-          <div>
+          <div class="d-none d-sm-block">
             {{ users.links()|raw }}
+          </div>
+          <div class="d-block d-sm-none">
+            <div class="btn-group btn-group-sm">
+              {% if users.previousPageUrl() %}
+              <a href="{{ users.previousPageUrl() }}" class="btn btn-outline-primary">
+                <i class="fas fa-chevron-left"></i> {{ trans('CampusStatus::campus-status.config.user-list.prev-page') }}
+              </a>
+              {% else %}
+              <button class="btn btn-outline-primary" disabled>
+                <i class="fas fa-chevron-left"></i> {{ trans('CampusStatus::campus-status.config.user-list.prev-page') }}
+              </button>
+              {% endif %}
+              {% if users.nextPageUrl() %}
+              <a href="{{ users.nextPageUrl() }}" class="btn btn-outline-primary">
+                {{ trans('CampusStatus::campus-status.config.user-list.next-page') }} <i class="fas fa-chevron-right"></i>
+              </a>
+              {% else %}
+              <button class="btn btn-outline-primary" disabled>
+                {{ trans('CampusStatus::campus-status.config.user-list.next-page') }} <i class="fas fa-chevron-right"></i>
+              </button>
+              {% endif %}
+            </div>
           </div>
         </div>
       </div>

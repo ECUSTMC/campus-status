@@ -84,4 +84,6 @@ config:
     batch-verify-success: "Batch verification completed. :count users verified via student/staff ID"
     batch-verify-fail: Batch verification failed. Please try again later
     showing: "Showing :from - :to of :total"
+    prev-page: Previous
+    next-page: Next
   invalid-cidr: "The following CIDR entries are invalid and have been ignored: :list"

@@ -84,4 +84,6 @@ config:
     batch-verify-success: "批量验证完成，共 :count 人通过学工号认证"
     batch-verify-fail: 批量验证失败，请稍后重试
     showing: "显示 :from - :to，共 :total 条"
+    prev-page: 上一页
+    next-page: 下一页
   invalid-cidr: "以下 CIDR 格式无效已被忽略：:list"
