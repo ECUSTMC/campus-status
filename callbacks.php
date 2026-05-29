@@ -2,9 +2,7 @@
 
 use App\Events\PluginWasDisabled;
 use App\Events\PluginWasEnabled;
-use App\Events\UserRegistered;
 use App\Services\Facades\Option;
-use CampusStatus\Services\AutoVerifier;
 
 return [
     PluginWasEnabled::class => function () {
@@ -32,10 +30,5 @@ return [
     },
 
     PluginWasDisabled::class => function () {
-    },
-
-    UserRegistered::class => function (UserRegistered $event) {
-        $autoVerifier = new AutoVerifier();
-        $autoVerifier->verifyUserByEmail($event->user->uid, $event->user->email);
     },
 ];

@@ -1,7 +1,10 @@
 <?php
 
+use App\Events\UserRegistered;
 use App\Services\Hook;
+use CampusStatus\Services\AutoVerifier;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Event;
 use CampusStatus\Migrations\AddExpiresAtToCampusStatusTable;
 
 return function () {
@@ -13,6 +16,11 @@ return function () {
 
         Cache::forever('campus_status_expires_at_migrated', true);
     }
+
+    Event::listen(UserRegistered::class, function (UserRegistered $event) {
+        $autoVerifier = new AutoVerifier();
+        $autoVerifier->verifyUserByEmail($event->user->uid, $event->user->email);
+    });
 
     Hook::addRoute(function () {
         Route::namespace('CampusStatus\Controllers')
