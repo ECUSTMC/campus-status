@@ -141,7 +141,7 @@
             {{ trans('CampusStatus::campus-status.config.user-list.showing', {from: users.firstItem()|default(0), to: users.lastItem()|default(0), total: users.total()}) }}
           </div>
           <div>
-            {{ users.links()|raw }}
+            {{ users.onEachSide(1).links()|raw }}
           </div>
         </div>
       </div>
