@@ -2,7 +2,9 @@
 
 use App\Events\UserRegistered;
 use App\Services\Hook;
+use CampusStatus\Models\CampusStatusRecord;
 use CampusStatus\Services\AutoVerifier;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
 use CampusStatus\Migrations\AddExpiresAtToCampusStatusTable;
@@ -48,4 +50,8 @@ return function () {
         'link'  => 'user/campus-status',
         'icon'  => 'fa-university',
     ]);
+
+    app(Dispatcher::class)->listen('user.deleted', function ($user) {
+        CampusStatusRecord::where('uid', $user->uid)->delete();
+    });
 };

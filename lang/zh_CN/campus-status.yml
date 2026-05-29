@@ -55,6 +55,7 @@ config:
     on-campus: "在校用户：:count 人"
     off-campus: "离校用户：:count 人"
     unverified: "未认证用户：:count 人"
+    failed: "验证不通过：:count 人"
     total: "总用户数：:count 人"
   user-list:
     title: 用户在校状态列表

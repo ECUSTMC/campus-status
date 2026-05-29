@@ -41,7 +41,6 @@ class ConfigController extends Controller
         $form->handle();
 
         $totalUsers = User::count();
-        $verifiedCount = CampusStatusRecord::whereNotNull('verified_at')->count();
         $onCampusCount = 0;
         $offCampusCount = 0;
 
@@ -54,8 +53,14 @@ class ConfigController extends Controller
             }
         }
 
-        $failedCount = CampusStatusRecord::where('ip', 'email_failed')->count();
-        $unverifiedCount = $totalUsers - $verifiedCount - $failedCount;
+        $failedCount = CampusStatusRecord::where('ip', 'email_failed')
+            ->whereIn('uid', function ($q) {
+                $q->select('uid')->from('users');
+            })->count();
+
+        $unverifiedCount = User::whereNotIn('uid', function ($q) {
+            $q->select('uid')->from('campus_status_records');
+        })->count();
 
         $form->addMessage(trans('CampusStatus::campus-status.config.stats.on-campus', ['count' => $onCampusCount]), 'success');
         $form->addMessage(trans('CampusStatus::campus-status.config.stats.off-campus', ['count' => $offCampusCount]), 'warning');
