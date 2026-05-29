@@ -91,7 +91,7 @@ class ConfigController extends Controller
             });
         }
 
-        $users = $query->paginate(20)->appends(['search' => $search, 'status' => $statusFilter]);
+        $users = $query->simplePaginate(20)->appends(['search' => $search, 'status' => $statusFilter]);
 
         $userStatuses = [];
 

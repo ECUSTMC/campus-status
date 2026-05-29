@@ -138,10 +138,10 @@
       <div class="card-footer">
         <div class="d-flex flex-wrap justify-content-between align-items-center">
           <div class="text-muted mb-2 mb-sm-0">
-            {{ trans('CampusStatus::campus-status.config.user-list.showing', {from: users.firstItem()|default(0), to: users.lastItem()|default(0), total: users.total()}) }}
+            {{ trans('CampusStatus::campus-status.config.user-list.showing', {from: users.firstItem()|default(0), to: users.lastItem()|default(0), total: users.count()}) }}
           </div>
           <div>
-            {{ users.onEachSide(1).links()|raw }}
+            {{ users.links()|raw }}
           </div>
         </div>
       </div>
