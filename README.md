@@ -21,6 +21,9 @@ BlessingSkin Server 6 插件，通过 IP 或学工号校验用户在校状态。
 - 管理后台支持按状态筛选用户（在校 / 已过期 / 未认证）
 - 支持同时配置 IPv4 和 IPv6 CIDR 网段，也支持直接填写单个 IP 地址
 - **认证福利**：管理员可在后台配置 Markdown 格式的福利信息，展示在认证页面右侧
+- **注册自动认证**：用户通过 BlessingSkin 原生注册时，若邮箱符合学工号规则将自动认证
+- **一键批量验证**：管理后台提供一键验证按钮，对未认证用户批量进行学工号认证
+- **插件联动接口**：提供 `AutoVerifier::verify()` 静态方法供其他插件调用
 
 ## 使用方式
 
@@ -52,6 +55,7 @@ BlessingSkin Server 6 插件，通过 IP 或学工号校验用户在校状态。
 - 查看在校/已过期/未认证用户统计
 - 查看用户在校状态详细列表（含认证时间、过期时间、认证IP/方式）
 - 按状态快速筛选用户（全部 / 在校 / 已过期 / 未认证）
+- **一键学工号验证**：对未认证用户批量进行学工号邮箱验证，仅符合规则的会被自动认证
 
 ## 配置项
 
@@ -102,6 +106,33 @@ BlessingSkin Server 6 插件，通过 IP 或学工号校验用户在校状态。
 - 正常有效期 → 2027-05-28
 - 毕业日期 → 2026-06-30 23:59:59
 - **实际有效期 → 2026-06-30 23:59:59**
+
+## 自动认证
+
+### 原生注册自动认证
+
+用户通过 BlessingSkin 原生注册流程注册时，若邮箱符合学工号规则，将自动完成在校认证。
+
+### 其他插件联动
+
+本插件提供 `CampusStatus\Services\AutoVerifier` 类供其他插件调用：
+
+```php
+use CampusStatus\Services\AutoVerifier;
+
+// 验证单个用户，返回 bool
+AutoVerifier::verify(int $uid, string $email): bool;
+```
+
+建议使用前先检查类是否存在：
+
+```php
+if (class_exists(\CampusStatus\Services\AutoVerifier::class)) {
+    \CampusStatus\Services\AutoVerifier::verify($user->uid, $user->email);
+}
+```
+
+例如 [auth-ecust](https://cnb.cool/ecustmc/auth-ecust) 插件可在后台开启「注册时自动学工号认证」，在用户首次注册时自动调用本接口。
 
 ## IP 获取
 

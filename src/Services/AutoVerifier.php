@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class AutoVerifier
 {
+    public static function verify(int $uid, string $email): bool
+    {
+        return (new self())->verifyUserByEmail($uid, $email);
+    }
+
     public function verifyUserByEmail(int $uid, string $email): bool
     {
         $verifier = new EmailVerifier();
