@@ -120,15 +120,32 @@ BlessingSkin Server 6 插件，通过 IP 或学工号校验用户在校状态。
 ```php
 use CampusStatus\Services\AutoVerifier;
 
-// 验证单个用户，返回 bool
+// 通过学工号邮箱验证用户，返回 bool
 AutoVerifier::verify(int $uid, string $email): bool;
+
+// 通过 IP 地址验证用户，返回 bool
+AutoVerifier::verifyByIp(int $uid, string $ip): bool;
 ```
 
 建议使用前先检查类是否存在：
 
 ```php
 if (class_exists(\CampusStatus\Services\AutoVerifier::class)) {
-    \CampusStatus\Services\AutoVerifier::verify($user->uid, $user->email);
+    $autoVerifier = \CampusStatus\Services\AutoVerifier::class;
+
+    // 单独使用：学工号认证
+    $autoVerifier::verify($user->uid, $user->email);
+
+    // 单独使用：IP 认证
+    $autoVerifier::verifyByIp($user->uid, $userIp);
+
+    // 组合使用：注册时双通道认证，任一通过即标记在校
+    $ipResult = $autoVerifier::verifyByIp($user->uid, $userIp);
+    $emailResult = $autoVerifier::verify($user->uid, $user->email);
+
+    if ($ipResult || $emailResult) {
+        // 用户已通过在校认证
+    }
 }
 ```
 
